@@ -1,0 +1,15 @@
+.selector {
+  margin: 0.5rem 0;
+  button {
+    margin: 0 0.2rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid #eee;
+    cursor: pointer;
+    font-weight: 500;
+    &:hover {
+      border: 1px solid #444;
+    }
+  }
+}

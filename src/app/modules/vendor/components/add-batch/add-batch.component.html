@@ -1,0 +1,39 @@
+<header class="dialog-header">
+  <div class="dialog-title">Create Batch</div>
+  <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
+</header>
+<app-loader
+  [size]="34"
+  [includeBackdrop]="true"
+  *ngIf="addingBatch"
+></app-loader>
+<div class="dialog-body">
+  <form [formGroup]="bForm" (ngSubmit)="addBatch()">
+    <div class="form-group">
+      <label for="">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        autocomplete="off"
+        formControlName="name"
+        placeholder="Enter name of the Batch"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        autocomplete="off"
+        formControlName="description"
+        placeholder="Enter more details abou the batch"
+      ></textarea>
+    </div>
+    <div class="dialog-footer">
+      <button mat-button mat-dialog-close>Close</button>
+      <button mat-flat-button color="primary" type="submit">Save</button>
+    </div>
+  </form>
+</div>

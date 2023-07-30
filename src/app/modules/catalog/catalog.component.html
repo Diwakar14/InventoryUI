@@ -1,0 +1,67 @@
+<div class="context-menu">
+  <div class="passive">
+    <header class="page-header">
+      <h2>Catalog</h2>
+    </header>
+    <div class="route-search-box">
+      <i class="bi bi-search"></i>
+      <input
+        type="search"
+        autocomplete="off"
+        name="search"
+        placeholder="Search Catalog.."
+      />
+    </div>
+  </div>
+
+  <div class="action">
+    <button mat-flat-button color="accent" (click)="openCatalogAdd()">
+      <i class="bi bi-plus"></i>
+      Add New Catalog
+    </button>
+  </div>
+</div>
+<div class="main-content">
+  <!-- <div class="grid-view">
+    <app-catalog-card
+      *ngFor="let catalog of catalogs"
+      [catalog]="catalog"
+    ></app-catalog-card>
+  </div> -->
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <th class="text-center" style="width: 3%">#</th>
+        <th width="2%"></th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Active</th>
+        <th>Added</th>
+        <th>Updated</th>
+        <th class="text-right">Action</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let catalog of catalogs; index as i">
+          <td class="text-center">{{ i + 1 }}</td>
+          <td>
+            <div class="img-holder">
+              <img [src]="catalog.icon" width="100%" alt="" />
+            </div>
+          </td>
+          <td class="bold">{{ catalog.name }}</td>
+          <td>{{ catalog.description }}</td>
+          <td>{{ catalog.active }}</td>
+          <td>{{ catalog.createdAt | date }}</td>
+          <td>{{ catalog.updatedAt | date }}</td>
+          <td class="text-right">
+            <button mat-icon-button>
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

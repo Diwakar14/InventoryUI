@@ -1,0 +1,97 @@
+<div class="context-menu">
+  <div class="passive">
+    <header class="page-header">
+      <h2>Orders</h2>
+    </header>
+    <div class="route-search-box">
+      <i class="bi bi-search"></i>
+      <input type="search" name="search" placeholder="Search Orders..." />
+    </div>
+  </div>
+
+  <div class="action">
+    <button mat-flat-button color="primary">
+      <i class="bi bi-bag-plus-fill"></i>
+      Create Order
+    </button>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="table-container">
+    <table>
+      <thead>
+        <th class="text-center" style="width: 3%">#</th>
+        <th class="text-center">OrderID</th>
+        <th style="width: 20%">Products</th>
+        <th>Payment Mode</th>
+        <th>Online</th>
+        <th>Cash</th>
+        <th>Due</th>
+        <th>Total Amount</th>
+        <th class="text-left">Customer</th>
+        <th class="text-center">Receipt</th>
+        <th class="text-center">Status</th>
+        <th class="text-center">Added</th>
+        <th class="text-center">Updated</th>
+        <th class="text-center">Action</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let order of orders; index as i">
+          <td class="text-center">
+            {{ i + 1 }}
+          </td>
+          <td class="text-center">#{{ order.orderId | uppercase }}</td>
+          <td>
+            {{ order.products?.length }}
+          </td>
+          <td>
+            {{ order.paymentMode }}
+          </td>
+          <td>
+            {{ order.onlineAmount | currency : "₹" }}
+          </td>
+          <td>
+            {{ order.cashAmount | currency : "₹" }}
+          </td>
+          <td>
+            {{ order.dueAmount | currency : "₹" }}
+          </td>
+          <td>
+            {{ order.totalAmount | currency : "₹" }}
+          </td>
+          <td>
+            {{ order.customer.name }}
+          </td>
+          <td class="text-center">
+            <a
+              mat-stroked-button
+              color="primary"
+              [href]="
+                envBaseUrl +
+                order.receiptUrl.substring(1, order.receiptUrl.length)
+              "
+              target="_blank"
+              >Receipt</a
+            >
+          </td>
+          <td class="text-center">
+            {{ order.orderStatus }}
+          </td>
+          <td class="text-center">
+            {{ order.createdAt | date }}
+          </td>
+          <td class="text-center">
+            {{ order.updatedAt | date }}
+          </td>
+          <td class="text-center">
+            <button mat-icon-button color="warn">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+@include mat.core();
+
+$my-primary: mat.define-palette(mat.$purple-palette, 500);
+$my-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+@include mat.all-component-themes($my-theme);
+$color-config: mat.get-color-config($my-theme);
+$primary-palette: map.get($color-config, "primary");
+$accent-palette: map.get($color-config, "accent");
+$warn-palette: map.get($color-config, "warn");
+$is-dark-theme: map.get($color-config, "is-dark");
+
+.red {
+  color: mat.get-color-from-palette($warn-palette, 500);
+}
+.green {
+  color: mat.get-color-from-palette($accent-palette, 500);
+}
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.alert {
+  color: mat.get-color-from-palette($warn-palette, 500);
+  transition: all ease 0.2s;
+}
+
+.mdc-button {
+  letter-spacing: var(--mdc-typography-button-letter-spacing, 0) !important;
+}
+.mat-mdc-outlined-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-unelevated-button {
+  border-color: #eee !important;
+  border-radius: 8px !important;
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 12px !important;
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+  --mdc-icon-button-state-layer-size: 38px !important;
+  padding: 6px !important;
+}
+
+.mdc-form-field > label {
+  margin-bottom: 0 !important;
+}
+
+.mdc-list-item__primary-text {
+  font-size: 0.9rem !important;
+  letter-spacing: 0.9px !important;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.2rem;
+  background-color: mat.get-color-from-palette($primary-palette, 500);
+  color: white;
+  .dialog-title {
+    font-size: 1.2rem;
+  }
+}
+
+.dialog-body {
+  padding: 1.4rem;
+  max-height: 700px;
+  overflow-y: auto;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+
+  button:first-child {
+    margin-right: 0.2rem;
+  }
+}
+
+.table-container {
+  border-radius: 8px;
+  border: 1px solid #eee;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
+  thead {
+    background-color: rgba($color: #eee, $alpha: 0.5);
+    th {
+      text-align: left;
+      padding: 1rem 0.5rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #888;
+      border-bottom: 1px solid #eee;
+    }
+  }
+  tbody {
+    tr:hover {
+      background-color: rgba($color: #eee, $alpha: 0.5);
+      cursor: pointer;
+    }
+    td {
+      text-align: left;
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}

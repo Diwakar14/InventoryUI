@@ -1,0 +1,51 @@
+@use "@angular/material" as mat;
+
+form {
+  position: relative;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  label {
+    margin-bottom: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.form-control {
+  border: 1px solid #eee;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  outline: none;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 500;
+  &::placeholder {
+    font-weight: 100;
+  }
+  &:focus {
+    border: 1px solid mat.get-color-from-palette($primary-palette, 500);
+  }
+}
+
+.form-item-group {
+  .form-group:first-child {
+    margin-right: 0.2rem;
+  }
+  .form-group:last-child {
+    margin-left: 0.2rem;
+  }
+}
+fieldset {
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #efefef;
+  margin-bottom: 1rem;
+  legend {
+    font-weight: 500;
+    padding: 0 0.5rem;
+  }
+}

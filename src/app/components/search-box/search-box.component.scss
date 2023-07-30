@@ -1,0 +1,19 @@
+.search-box {
+  position: relative;
+  display: flex;
+  input {
+    flex: 1;
+    padding: 0.8rem 2.5rem;
+  }
+}
+
+.right-span,
+.left-span {
+  position: absolute;
+  right: 1rem;
+  top: 0.8rem;
+  width: fit-content;
+}
+.left-span {
+  left: 1rem;
+}

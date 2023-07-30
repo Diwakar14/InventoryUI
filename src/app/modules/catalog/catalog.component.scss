@@ -1,0 +1,14 @@
+.main-content {
+}
+
+.grid-view {
+  display: flex;
+  flex-wrap: wrap;
+}
+.img-holder {
+  width: 35px;
+  height: 35px;
+  border-radius: 99px;
+  overflow: hidden;
+  border: 2px solid #eee;
+}

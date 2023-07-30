@@ -1,0 +1,228 @@
+<header class="dialog-header">
+  <div class="dialog-title">Create Order</div>
+  <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
+</header>
+<app-loader
+  [size]="34"
+  [includeBackdrop]="true"
+  *ngIf="creatingOrder"
+></app-loader>
+<div class="dialog-body">
+  <div
+    class="order-details"
+    [@SlideInLeft]="selectedProducts.length > 0 ? 'open' : 'closed'"
+  >
+    <div class="order-details-title">Product Details</div>
+
+    <ul class="prd-list">
+      <li *ngFor="let p of selectedProducts">
+        <div class="title bold">
+          {{ p.name | truncate : 25 }}
+        </div>
+
+        <p class="price">
+          {{ p.qty }} x {{ p.salePrice | currency : "₹" }} =
+          {{ p.qty * p.salePrice | currency : "₹" }}
+        </p>
+
+        <app-qty-selector [(qty)]="p.qty"></app-qty-selector>
+      </li>
+    </ul>
+
+    <div class="summary">
+      Total
+      <h2>{{ getTotal | currency : "₹" }}</h2>
+    </div>
+  </div>
+
+  <form action="">
+    <div class="card">
+      <div class="title">
+        <span>Add Product</span>
+        <i
+          class="bi bi-check-circle-fill green"
+          [hidden]="!orderProcess.product.complete"
+        ></i>
+      </div>
+      <div class="card-body" [hidden]="!orderProcess.product.active">
+        <div class="form-group">
+          <label for="">Select Product</label>
+
+          <app-search-box
+            [inputProps]="{
+              name: 'productSearch',
+              placeholder: 'Search / Select Product',
+              required: true
+            }"
+            [service]="productService"
+            [resetOnSelect]="true"
+            [searchKey]="'name'"
+            (onItemSelected)="handleProductSelected($event)"
+          ></app-search-box>
+        </div>
+
+        <button
+          mat-flat-button
+          type="button"
+          [disabled]="!orderProcess.product.complete"
+          (click)="next('customer')"
+        >
+          Next <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">
+        <span> Customer Details </span>
+        <i
+          class="bi bi-check-circle-fill green"
+          *ngIf="orderProcess.customer.complete"
+        ></i>
+      </div>
+
+      <div class="card-body" [hidden]="!orderProcess.customer.active">
+        <app-search-box
+          [service]="customerService"
+          [searchKey]="'name'"
+          [inputProps]="{
+            placeholder: 'Search / Select Customer',
+            required: true
+          }"
+          *ngIf="!isAddCustomer"
+          (onItemSelected)="handleCustomerSelect($event)"
+        ></app-search-box>
+
+        <div class="text-center" *ngIf="!isAddCustomer">
+          <div class="separator">OR</div>
+          <button
+            (click)="addCustomerForm()"
+            mat-stroked-button
+            color="primary"
+            class="mybtn"
+          >
+            <i class="bi bi-plus-lg"></i> Add New Customer
+          </button>
+        </div>
+
+        <div class="customer-card" *ngIf="customer.id">
+          <div class="card-body">
+            Name: <span class="val">{{ customer.name }} </span> <br />
+            Email: <span class="val">{{ customer.email }}</span> <br />
+            Phone: <span class="val">{{ customer.phone }}</span> <br />
+            Address: <span class="val">{{ customer.address }}</span>
+          </div>
+        </div>
+
+        <div class="d-flex justify-space-bwn mt-3">
+          <button mat-flat-button type="button" (click)="back('product')">
+            <i class="bi bi-arrow-left"></i> Back
+          </button>
+          <button
+            mat-flat-button
+            type="button"
+            [disabled]="!orderProcess.customer.complete"
+            (click)="next('payment')"
+          >
+            Next <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">
+        <span>Payment</span>
+        <i
+          class="bi bi-check-circle-fill green"
+          *ngIf="orderProcess.payment.complete"
+        ></i>
+      </div>
+      <div class="card-body" [hidden]="!orderProcess.payment.active">
+        <div class="form-group">
+          <label for="">Mode of Payment</label>
+          <input
+            type="text"
+            autocomplete="off"
+            class="form-control"
+            placeholder="Mode of payment"
+            [formControl]="paymentModeControl"
+            [matAutocomplete]="auto"
+            name="modeOfPayment"
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="handlePaymentChange()"
+          >
+            <mat-option *ngFor="let option of paymentOptios" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="row" *ngIf="payment.paymentMode == 'Both'">
+          <div class="form-group">
+            <label for="">Online</label>
+            <input
+              type="number"
+              autocomplete="off"
+              [(ngModel)]="payment.onlineAmount"
+              class="form-control"
+              placeholder="Online amount"
+              name="onlineAmount"
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Cash</label>
+            <input
+              type="number"
+              autocomplete="off"
+              [(ngModel)]="payment.cashAmount"
+              class="form-control"
+              placeholder="Cash amount"
+              name="cashAmount"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-slide-toggle
+            name="partialPayment"
+            [(ngModel)]="payment.partialPayment"
+            >Partial Payment
+          </mat-slide-toggle>
+        </div>
+        <div class="form-group">
+          <div class="form-group" *ngIf="payment.partialPayment">
+            <label for="">Due</label>
+            <input
+              type="number"
+              [(ngModel)]="payment.dueAmount"
+              autocomplete="off"
+              class="form-control"
+              placeholder="Cash amount"
+              name="dueAmount"
+            />
+          </div>
+        </div>
+
+        <div class="d-flex justify-space-bwn mt-3">
+          <button mat-flat-button type="button" (click)="back('customer')">
+            <i class="bi bi-arrow-left"></i> Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <button mat-button mat-dialog-close>Close</button>
+      <button
+        mat-flat-button
+        mat-dialog-close
+        [type]="'button'"
+        (click)="createOrder()"
+        [disabled]="!orderProcess.payment.complete"
+        color="primary"
+      >
+        Create Order
+      </button>
+    </div>
+  </form>
+</div>

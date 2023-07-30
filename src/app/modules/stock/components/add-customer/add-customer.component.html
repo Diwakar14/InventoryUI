@@ -1,0 +1,119 @@
+<header class="dialog-header">
+  <div class="dialog-title">Create Customer</div>
+  <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
+</header>
+<app-loader *ngIf="addingCustomer"></app-loader>
+<div class="dialog-body">
+  <form #f="ngForm" class="customer-form" (ngSubmit)="addCustomer(f)">
+    <app-loader *ngIf="addingCustomer"></app-loader>
+    <div class="form-group">
+      <label for="name">
+        Name
+
+        <div
+          class="alert"
+          @SlideIn
+          *ngIf="name.invalid && (name.dirty || name.touched)"
+        >
+          <div *ngIf="name.errors?.['required']">Name is required</div>
+        </div>
+      </label>
+      <input
+        type="text"
+        #name="ngModel"
+        autocomplete="off"
+        [(ngModel)]="customer.name"
+        class="form-control"
+        required
+        placeholder="Name of the customer"
+        name="name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="phone">
+        Phone
+        <div
+          class="alert"
+          @SlideIn
+          *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+        >
+          <div *ngIf="phone.errors?.['required']">Phone is required</div>
+          <div *ngIf="phone.errors?.['minlength']">
+            Phone number must be of 10 digits.
+          </div>
+        </div>
+      </label>
+      <input
+        name="phone"
+        type="text"
+        #phone="ngModel"
+        min="10"
+        minlength="10"
+        maxlength="10"
+        autocomplete="off"
+        class="form-control"
+        [(ngModel)]="customer.phone"
+        placeholder="Phone number of the customer"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">
+        Email
+        <div
+          class="alert"
+          @SlideIn
+          *ngIf="email.invalid && (email.dirty || email.touched)"
+        >
+          <div *ngIf="email.errors?.['required']">Email is required</div>
+        </div>
+      </label>
+
+      <input
+        type="text"
+        #email="ngModel"
+        autocomplete="off"
+        required
+        class="form-control"
+        [(ngModel)]="customer.email"
+        placeholder="Email address of the customer"
+        name="email"
+      />
+    </div>
+    <div class="form-group">
+      <label for="address">
+        Address
+        <div
+          class="alert"
+          @SlideIn
+          *ngIf="address.invalid && (address.dirty || address.touched)"
+        >
+          <div *ngIf="address.errors?.['required']">Address is required</div>
+          <div *ngIf="address.errors?.['maxLength']">
+            Max Length is 255 characters.
+          </div>
+        </div>
+      </label>
+
+      <textarea
+        rows="3"
+        type="text"
+        #address="ngModel"
+        maxlength="255"
+        autocomplete="off"
+        required
+        class="form-control"
+        [(ngModel)]="customer.address"
+        placeholder="Shipping address of the customer"
+        name="address"
+      ></textarea>
+    </div>
+
+    <button mat-flat-button color="primary" type="submit" class="me-3">
+      <i class="bi bi-plus-lg"></i> Add Customer
+    </button>
+    <button mat-flat-button mat-dialog-close type="button">
+      <i class="bi bi-x-lg"></i> Cancel
+    </button>
+  </form>
+</div>

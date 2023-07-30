@@ -1,0 +1,86 @@
+<div class="context-menu">
+  <div class="passive">
+    <header class="page-header">
+      <h2>Vendors</h2>
+    </header>
+    <div class="route-search-box">
+      <i class="bi bi-search"></i>
+      <input type="search" name="search" placeholder="Search Vendors..." />
+    </div>
+  </div>
+
+  <div class="action">
+    <button
+      mat-flat-button
+      color="accent"
+      class="me-2"
+      (click)="openBatchDialog()"
+    >
+      <i class="bi bi-plus-lg"></i>
+      Create Batch
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="me-2"
+      (click)="openVendorDialog()"
+    >
+      <i class="bi bi-bag-plus-fill"></i>
+      Create Vendor
+    </button>
+    <button mat-flat-button color="primary">
+      <i class="bi bi-bag-plus-fill"></i>
+      Create Order
+    </button>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="table-container">
+    <table>
+      <thead>
+        <th class="text-center" style="width: 3%">#</th>
+        <th class="text-left">Name</th>
+        <th class="text-left">Phone</th>
+        <th>Email</th>
+        <th class="text-center">Added</th>
+        <th class="text-center">Updated</th>
+        <th class="text-right">Action</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let vendor of vendors; index as i">
+          <td class="text-center">
+            {{ i + 1 }}
+          </td>
+          <td>{{ vendor.name }}</td>
+          <td>{{ vendor.phone }}</td>
+          <td>{{ vendor.email }}</td>
+
+          <td class="text-center">{{ vendor.createdAt | date }}</td>
+          <td class="text-center">{{ vendor.updatedAt | date }}</td>
+          <td class="text-right">
+            <button class="myBtn">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-loader
+      class="text-center my-3 d-block"
+      [size]="34"
+      [includeBackdrop]="false"
+      *ngIf="loadingVendors"
+    ></app-loader>
+    <mat-paginator
+      *ngIf="!loadingVendors"
+      [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</div>

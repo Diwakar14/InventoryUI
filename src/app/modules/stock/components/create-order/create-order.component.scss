@@ -1,0 +1,121 @@
+.dialog-body {
+  display: flex;
+  padding: 0;
+  .order-details {
+    width: 0%;
+    overflow: hidden;
+    position: relative;
+    background-color: #fafafa;
+
+    .order-details-title {
+      padding: 1rem 1.2rem 0.4rem;
+      font-weight: 500;
+    }
+  }
+
+  form {
+    flex: 1;
+    padding: 1.2rem;
+    overflow-y: auto;
+  }
+}
+
+.prd-list {
+  margin: 0;
+  padding: 0;
+  margin-top: 0.2rem;
+  list-style: none;
+  max-height: 450px;
+  padding: 1.2rem;
+  padding-top: 0;
+  overflow-y: auto;
+  li {
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 0.5rem;
+    .price {
+      margin-top: 0.2rem;
+      color: #444;
+      font-size: 0.9rem;
+    }
+  }
+}
+.summary {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 1rem 0;
+  background-color: #eee;
+  text-align: center;
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.card {
+  box-shadow: 0 1px 2px #eee;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  .card-body {
+    padding: 1rem;
+  }
+  .title {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background-color: #efefef;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.customer-form {
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.separator {
+  text-align: center;
+  margin: 0.5rem 0;
+  color: #444;
+  font-size: 0.8rem;
+}
+
+.row .form-group:first-child {
+  margin-right: 0.5rem;
+}
+.row .form-group:last-child {
+  margin-left: 0.5rem;
+}
+
+.dialog-body {
+  max-height: 700px;
+  min-height: 600px;
+  overflow-y: auto;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+
+  button:first-child {
+    margin-right: 0.2rem;
+  }
+}
+
+.customer-card {
+  border: 1px solid #eee;
+  margin-top: 1rem;
+  border-radius: 8px;
+  .card-body {
+    .val {
+      font-weight: 500;
+    }
+  }
+}

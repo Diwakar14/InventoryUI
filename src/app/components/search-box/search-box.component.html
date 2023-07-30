@@ -1,0 +1,28 @@
+<div class="search-box">
+  <div class="left-span">
+    <i class="bi bi-search"></i>
+  </div>
+  <input
+    type="text"
+    autocomplete="off"
+    [placeholder]="inputProps.placeholder"
+    class="form-control"
+    [formControl]="searchControl"
+    #searchInput
+    [matAutocomplete]="autoComp"
+    [name]="inputProps.name"
+  />
+  <mat-autocomplete
+    #autoComp="matAutocomplete"
+    [displayWith]="displaySelect"
+    (optionSelected)="onItemSelect()"
+  >
+    <mat-option *ngFor="let item of dropdownList" [value]="item">
+      {{ item.name }}
+    </mat-option>
+  </mat-autocomplete>
+  <div class="right-span">
+    <app-loader class="spinner" *ngIf="isSearching" [size]="20"></app-loader>
+    <i class="bi bi-chevron-down" *ngIf="!isSearching && showDropdownIcon"></i>
+  </div>
+</div>

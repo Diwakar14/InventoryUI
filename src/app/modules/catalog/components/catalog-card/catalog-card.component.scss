@@ -1,0 +1,22 @@
+.card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  display: flex;
+  padding: 0.5rem 1rem;
+  width: 200px;
+  &:hover {
+    background-color: #efefef;
+    cursor: pointer;
+  }
+  .logo {
+  }
+  .content {
+    padding: 0.5rem;
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+}
