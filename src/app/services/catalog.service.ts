@@ -21,11 +21,11 @@ export class CatalogService {
     return this.http.get(env.baseUrl + 'Catalog/' + id);
   }
 
-  createCatalogs(catalog: Catalog) {
+  createCatalogs(catalog: FormData) {
     return this.http.post(env.baseUrl + 'Catalog', catalog);
   }
 
-  updateCatalogs(catalog: Catalog, id: number) {
+  updateCatalogs(catalog: FormData, id: number) {
     return this.http.put(env.baseUrl + 'Catalog/' + id, catalog);
   }
 

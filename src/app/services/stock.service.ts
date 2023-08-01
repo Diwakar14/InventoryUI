@@ -19,7 +19,7 @@ export class StockService {
     return this.http.get(env.baseUrl + 'Product/' + id);
   }
 
-  createProducts(product: Product) {
+  createProducts(product: FormData) {
     return this.http.post(env.baseUrl + 'Product', product);
   }
 

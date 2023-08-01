@@ -10,6 +10,8 @@ import { LoaderComponent } from '../components/loader/loader.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const MAT_MODULE = [
   MatButtonModule,
@@ -17,6 +19,8 @@ const MAT_MODULE = [
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatSortModule,
+  MatRippleModule,
+  MatDialogModule,
 ];
 
 @NgModule({
@@ -26,15 +30,15 @@ const MAT_MODULE = [
     QtySelectorComponent,
     LoaderComponent,
   ],
-  imports: [...MAT_MODULE, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ...MAT_MODULE],
   exports: [
-    ...MAT_MODULE,
     SearchBoxComponent,
     CommonModule,
     TruncatePipe,
     QtySelectorComponent,
     LoaderComponent,
     ReactiveFormsModule,
+    ...MAT_MODULE,
   ],
   providers: [],
 })

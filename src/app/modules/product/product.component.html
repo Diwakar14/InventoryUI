@@ -5,12 +5,17 @@
     </header>
     <div class="route-search-box">
       <i class="bi bi-search"></i>
-      <input type="search" name="search" placeholder="Search Product..." />
+      <input
+        type="search"
+        name="search"
+        autocomplete="off"
+        placeholder="Search Product..."
+      />
     </div>
   </div>
 
   <div class="action">
-    <button mat-flat-button color="accent" class="me-2">
+    <button mat-flat-button color="accent" class="me-2" (click)="openProdAdd()">
       <i class="bi bi-plus-lg"></i>
       Create Product
     </button>

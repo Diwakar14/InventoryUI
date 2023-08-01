@@ -9,6 +9,7 @@
         type="search"
         autocomplete="off"
         name="search"
+        #searchInput
         placeholder="Search Catalog.."
       />
     </div>
@@ -36,7 +37,8 @@
         <th width="2%"></th>
         <th>Name</th>
         <th>Description</th>
-        <th>Active</th>
+        <th class="text-center">Total Product</th>
+        <th class="text-center">Active</th>
         <th>Added</th>
         <th>Updated</th>
         <th class="text-right">Action</th>
@@ -52,16 +54,38 @@
           </td>
           <td class="bold">{{ catalog.name }}</td>
           <td>{{ catalog.description }}</td>
-          <td>{{ catalog.active }}</td>
+          <td class="text-center">{{ 1 }}</td>
+          <td class="text-center">
+            <i class="bi bi-fire red" *ngIf="catalog.active"></i>
+            <i class="bi bi-x-lg red" *ngIf="!catalog.active"></i>
+          </td>
           <td>{{ catalog.createdAt | date }}</td>
           <td>{{ catalog.updatedAt | date }}</td>
           <td class="text-right">
-            <button mat-icon-button>
-              <i class="bi bi-three-dots-vertical"></i>
+            <button class="btn-icon" mat-ripple>
+              <i class="bi bi-pen"></i>
+            </button>
+            <button class="btn-icon" mat-ripple>
+              <i class="bi bi-trash"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <app-loader
+      class="text-center my-3 d-block"
+      [size]="34"
+      [includeBackdrop]="false"
+      *ngIf="loadingCatalogs"
+    ></app-loader>
+    <mat-paginator
+      *ngIf="!loadingCatalogs"
+      [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </div>
 </div>

@@ -8,11 +8,9 @@ import { AddBatchComponent } from './components/add-batch/add-batch.component';
 import { AddVendorComponent } from './components/add-vendor/add-vendor.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
-const MAT_COMPONENTS = [MatDialogModule];
-
 @NgModule({
   declarations: [VendorComponent, AddBatchComponent, AddVendorComponent],
-  imports: [CommonModule, VendorRoutingModule, SharedModule, ...MAT_COMPONENTS],
-  exports: [SharedModule, ...MAT_COMPONENTS],
+  imports: [CommonModule, VendorRoutingModule, SharedModule],
+  exports: [SharedModule],
 })
 export class VendorModule {}
