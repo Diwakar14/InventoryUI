@@ -1,7 +1,9 @@
+@use "@angular/material" as mat;
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 @import "./theme.scss";
 @import "./forms.scss";
+
 html,
 body {
   height: 100%;
@@ -41,7 +43,7 @@ body {
   display: flex;
   width: 100%;
   & > * {
-    flex: 1;
+    width: 100%;
   }
 }
 
@@ -84,6 +86,9 @@ body {
     outline: none;
     border: none;
     width: 100%;
+  }
+  &:focus-within {
+    border-color: mat.get-color-from-palette($primary-palette, 500);
   }
 }
 

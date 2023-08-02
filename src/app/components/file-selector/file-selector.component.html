@@ -1,0 +1,32 @@
+<div class="file-selector">
+  <ul class="file-list">
+    <li
+      class="file"
+      [class.selectedFile]="file.featured"
+      *ngFor="let file of fileList; index as i"
+      (click)="onSelect(i)"
+    >
+      <div class="img-thumb">
+        <img [src]="file.thumb" width="100%" alt="" />
+      </div>
+      <button class="icon-btn" (click)="remove(i)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </li>
+
+    <li class="file">
+      <label for="fileInput" matRipple>
+        <input
+          type="file"
+          name="file"
+          [multiple]="multiple"
+          accept=".jpg"
+          #file
+          (change)="handleFileChange(file)"
+          id="fileInput"
+        />
+        <i class="bi bi-plus-lg"></i>
+      </label>
+    </li>
+  </ul>
+</div>

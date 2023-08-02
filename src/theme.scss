@@ -88,7 +88,7 @@ $is-dark-theme: map.get($color-config, "is-dark");
 
 .dialog-body {
   padding: 1.4rem;
-  max-height: 700px;
+  max-height: 600px;
   overflow-y: auto;
 }
 

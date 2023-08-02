@@ -1,0 +1,15 @@
+.attr-row {
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  .form-control {
+    margin-right: 0.5rem;
+    &:last-child {
+      margin-right: 0rem;
+    }
+  }
+
+  button {
+    width: 20%;
+  }
+}

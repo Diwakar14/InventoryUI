@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SlideIn } from 'src/app/animations/SlideIn';
 import { StockService } from 'src/app/services/stock.service';
@@ -12,11 +12,21 @@ import { StockService } from 'src/app/services/stock.service';
 })
 export class CreateProductComponent {
   addingProduct: boolean = false;
+
+  addAttr = this.fb.group({
+    text: ['', Validators.required],
+    value: ['', Validators.required],
+  });
   pForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
     active: [true],
+    addAttributes: this.fb.array([this.addAttr]),
   });
+
+  get attributes() {
+    return this.pForm.controls.addAttributes as FormArray;
+  }
 
   get name() {
     return this.pForm.controls.name;
@@ -38,8 +48,18 @@ export class CreateProductComponent {
     }
   }
 
+  handleSelectedFiles(event: any) {
+    console.log(event);
+  }
+
+  addMoreCharges() {
+    this.pForm.controls.addAttributes.push(this.addAttr);
+  }
+
   createProduct() {
     let f = this.pForm.controls;
+    if (this.pForm.invalid) return this.pForm.markAllAsTouched();
+
     this.formData.append('name', f.name.value || '');
     this.formData.append('description', f.description.value || '');
     this.formData.append('active', f.active.value + '');
@@ -54,5 +74,9 @@ export class CreateProductComponent {
         this.addingProduct = false;
       },
     });
+  }
+
+  removeAttr(i: number) {
+    this.pForm.controls.addAttributes.removeAt(i);
   }
 }

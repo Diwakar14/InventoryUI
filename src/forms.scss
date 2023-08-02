@@ -23,6 +23,10 @@ form {
   font-size: inherit;
   font-family: inherit;
   font-weight: 500;
+  transition: all ease 0.2s;
+  &:hover {
+    border-color: mat.get-color-from-palette($accent-palette, 500);
+  }
   &::placeholder {
     font-weight: 100;
   }

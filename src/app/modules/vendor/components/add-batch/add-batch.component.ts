@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Batch } from 'src/app/models/Batch';
 import { BatchService } from 'src/app/services/batch.service';
+import { VendorService } from 'src/app/services/vendor.service';
 
 @Component({
   selector: 'app-add-batch',
@@ -14,14 +15,22 @@ export class AddBatchComponent {
   bForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
+    vendorId: [0, Validators.required],
   });
 
-  constructor(public fb: FormBuilder, private batchService: BatchService) {}
+  constructor(
+    public fb: FormBuilder,
+    private batchService: BatchService,
+    public vendorService: VendorService
+  ) {}
 
   addBatch() {
+    if (this.bForm.invalid) return this.bForm.markAllAsTouched();
+
     var batch: Batch = {
       name: this.bForm.controls.name.value || '',
       description: this.bForm.controls.description.value || '',
+      vendorId: this.bForm.controls.vendorId.value || 0,
     };
 
     this.addingBatch = true;
@@ -34,5 +43,8 @@ export class AddBatchComponent {
         this.addingBatch = false;
       },
     });
+  }
+  handleVendorSelect(vendor: any) {
+    this.bForm.controls.vendorId.setValue(vendor.id);
   }
 }

@@ -11,7 +11,7 @@ export class ProductComponent {
   constructor(private dialog: MatDialog) {}
   openProdAdd() {
     this.dialog.open(CreateProductComponent, {
-      width: '400px',
+      width: '500px',
     });
   }
 }

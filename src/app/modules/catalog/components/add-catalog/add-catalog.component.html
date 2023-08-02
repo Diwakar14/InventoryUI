@@ -11,13 +11,14 @@
   <form [formGroup]="cForm" (ngSubmit)="addCatalog()">
     <div class="form-group">
       <label for="">Icon</label>
-      <input
+      <!-- <input
         #icon
         type="file"
         name="icon"
         (change)="handleFileChange(icon)"
         class="form-control"
-      />
+      /> -->
+      <app-file-selector></app-file-selector>
     </div>
     <div class="form-group">
       <label for="">

@@ -10,6 +10,20 @@
 <div class="dialog-body">
   <form [formGroup]="bForm" (ngSubmit)="addBatch()">
     <div class="form-group">
+      <label for="">Select Vendor</label>
+      <app-search-box
+        [inputProps]="{
+          placeholder: 'Enter name of the vendor',
+          required: true,
+          name: 'vendorSearch'
+        }"
+        [service]="vendorService"
+        [searchKey]="'name'"
+        (onItemSelected)="handleVendorSelect($event)"
+      >
+      </app-search-box>
+    </div>
+    <div class="form-group">
       <label for="">Name</label>
       <input
         type="text"

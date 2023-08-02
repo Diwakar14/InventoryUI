@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FileSelectorComponent } from '../components/file-selector/file-selector.component';
 
 const MAT_MODULE = [
   MatButtonModule,
@@ -29,6 +30,7 @@ const MAT_MODULE = [
     TruncatePipe,
     QtySelectorComponent,
     LoaderComponent,
+    FileSelectorComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, ...MAT_MODULE],
   exports: [
@@ -37,6 +39,7 @@ const MAT_MODULE = [
     TruncatePipe,
     QtySelectorComponent,
     LoaderComponent,
+    FileSelectorComponent,
     ReactiveFormsModule,
     ...MAT_MODULE,
   ],

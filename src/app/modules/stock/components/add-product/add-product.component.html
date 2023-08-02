@@ -65,32 +65,16 @@
     <fieldset>
       <legend>Product</legend>
       <div class="form-group">
-        <label for=""> Name </label>
-        <input
-          type="text"
-          class="form-control"
-          autocomplete="off"
-          formControlName="name"
-          placeholder="Enter name of the product"
-          name="name"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="">Description</label>
-        <textarea
-          rows="3"
-          class="form-control"
-          autocomplete="off"
-          name="description"
-          formControlName="description"
-          placeholder="Description of the product"
-        ></textarea>
-      </div>
-      <div class="form-group">
-        <mat-slide-toggle name="active" formControlName="active"
-          >Active</mat-slide-toggle
-        >
+        <app-search-box
+          [inputProps]="{
+            placeholder: 'Search / Select name of Product',
+            required: true,
+            name: 'searchProduct'
+          }"
+          [searchKey]="'name'"
+          [service]="productService"
+          (onItemSelected)="handleProductSelected($event)"
+        ></app-search-box>
       </div>
     </fieldset>
 

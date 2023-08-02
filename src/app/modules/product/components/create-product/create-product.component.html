@@ -27,7 +27,7 @@
         required
         autocomplete="off"
         formControlName="name"
-        placeholder="Enter name of the catalog"
+        placeholder="Enter name of the product"
       />
     </div>
     <div class="form-group">
@@ -39,8 +39,50 @@
         name="description"
         autocomplete="off"
         formControlName="description"
-        placeholder="Enter more details abou the catalog"
+        placeholder="Enter more details about the product"
       ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="">Additional Attributes</label>
+      <ng-container formArrayName="addAttributes">
+        <ng-container *ngFor="let attr of attributes.controls; index as i">
+          <div class="row attr-row" [formGroupName]="i">
+            <input
+              type="text"
+              placeholder="Enter attribute text"
+              formControlName="text"
+              class="form-control"
+            />
+            <input
+              type="text"
+              placeholder="Enter attribute value"
+              formControlName="value"
+              class="form-control"
+            />
+            <button mat-stroked-button (click)="removeAttr(i)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </ng-container>
+      </ng-container>
+      <button mat-stroked-button (click)="addMoreCharges()">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+    <div class="form-group">
+      <label for="">Images</label>
+      <app-file-selector
+        [multiple]="true"
+        (onImageSelect)="handleSelectedFiles($event)"
+      ></app-file-selector>
+      <!-- <input
+        type="file"
+        name="images"
+        #images
+        (change)="handleFileChange(images)"
+        class="form-control"
+      /> -->
     </div>
     <div class="form-group">
       <mat-slide-toggle name="active" formControlName="active"
