@@ -5,7 +5,12 @@
     </header>
     <div class="route-search-box">
       <i class="bi bi-search"></i>
-      <input type="search" name="search" placeholder="Search Vendors..." />
+      <input
+        type="search"
+        autocomplete="off"
+        name="search"
+        placeholder="Search Vendors..."
+      />
     </div>
   </div>
 
@@ -44,6 +49,7 @@
         <th class="text-left">Name</th>
         <th class="text-left">Phone</th>
         <th>Email</th>
+        <th class="text-center">Batches</th>
         <th class="text-center">Added</th>
         <th class="text-center">Updated</th>
         <th class="text-right">Action</th>
@@ -57,6 +63,7 @@
           <td>{{ vendor.name }}</td>
           <td>{{ vendor.phone }}</td>
           <td>{{ vendor.email }}</td>
+          <td class="text-center">{{ 1 }}</td>
 
           <td class="text-center">{{ vendor.createdAt | date }}</td>
           <td class="text-center">{{ vendor.updatedAt | date }}</td>

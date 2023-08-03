@@ -38,9 +38,9 @@ export class AddVendorComponent {
     }
     var vendor: Vendor = {
       name: f.name.value || '',
-      email: f.name.value || '',
-      phone: f.name.value || '',
-      address: f.name.value || '',
+      email: f.email.value || '',
+      phone: f.phone.value + '' || '',
+      address: f.address.value || '',
     };
 
     this.addingVendor = true;
@@ -51,6 +51,7 @@ export class AddVendorComponent {
       },
       error: (val) => {
         console.log(val);
+        this.addingVendor = false;
       },
     });
   }

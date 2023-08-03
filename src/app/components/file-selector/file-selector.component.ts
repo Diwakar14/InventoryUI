@@ -45,11 +45,19 @@ export class FileSelectorComponent {
     fileReader.readAsDataURL(file as Blob);
     fileReader.addEventListener('load', (data) => {
       if (this.multiple) {
-        this.fileList.push({
-          file: file,
-          thumb: data.target?.result as string,
-          featured: false,
-        });
+        if (this.fileList.length == 0) {
+          this.fileList.push({
+            file: file,
+            thumb: data.target?.result as string,
+            featured: true,
+          });
+        } else {
+          this.fileList.push({
+            file: file,
+            thumb: data.target?.result as string,
+            featured: false,
+          });
+        }
       } else {
         this.fileList[0] = {
           file: file,

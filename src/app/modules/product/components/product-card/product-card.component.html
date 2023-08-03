@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-image">
+    <img [src]="data.featureImage" alt="" width="100%" />
+  </div>
+
+  <div class="card-body">
+    <h3>{{ data.name | truncate : "80" }}</h3>
+    <p class="text-light">
+      {{ data.description | truncate : "90" }}
+    </p>
+  </div>
+</div>

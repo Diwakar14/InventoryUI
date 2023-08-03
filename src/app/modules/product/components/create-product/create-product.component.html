@@ -10,6 +10,14 @@
 <div class="dialog-body">
   <form [formGroup]="pForm" (ngSubmit)="createProduct()">
     <div class="form-group">
+      <label for="">Images</label>
+      <app-file-selector
+        [multiple]="true"
+        (onImageSelect)="handleSelectedFiles($event)"
+      ></app-file-selector>
+    </div>
+
+    <div class="form-group">
       <label for="">
         <span>Name</span>
         <div
@@ -70,20 +78,7 @@
         <i class="bi bi-plus-lg"></i>
       </button>
     </div>
-    <div class="form-group">
-      <label for="">Images</label>
-      <app-file-selector
-        [multiple]="true"
-        (onImageSelect)="handleSelectedFiles($event)"
-      ></app-file-selector>
-      <!-- <input
-        type="file"
-        name="images"
-        #images
-        (change)="handleFileChange(images)"
-        class="form-control"
-      /> -->
-    </div>
+
     <div class="form-group">
       <mat-slide-toggle name="active" formControlName="active"
         >Active</mat-slide-toggle

@@ -38,9 +38,18 @@ export class VendorComponent implements OnInit {
   }
 
   openVendorDialog() {
-    this.dialog.open(AddVendorComponent, {
-      width: '400px',
-    });
+    this.dialog
+      .open(AddVendorComponent, {
+        width: '400px',
+      })
+      .afterClosed()
+      .subscribe({
+        next: (value) => {
+          if (value) {
+            this.vendors.unshift(value.data);
+          }
+        },
+      });
   }
 
   openBatchDialog() {

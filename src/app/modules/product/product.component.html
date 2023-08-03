@@ -22,4 +22,11 @@
   </div>
 </div>
 
-<div class="main-content"></div>
+<div class="main-content">
+  <div class="grid-view">
+    <app-product-card
+      *ngFor="let prod of products"
+      [data]="prod"
+    ></app-product-card>
+  </div>
+</div>

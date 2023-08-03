@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Batch } from 'src/app/models/Batch';
 import { BatchService } from 'src/app/services/batch.service';
 import { VendorService } from 'src/app/services/vendor.service';
@@ -11,7 +12,6 @@ import { VendorService } from 'src/app/services/vendor.service';
 })
 export class AddBatchComponent {
   addingBatch: boolean = false;
-  batches: any[] = [];
   bForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
@@ -21,7 +21,8 @@ export class AddBatchComponent {
   constructor(
     public fb: FormBuilder,
     private batchService: BatchService,
-    public vendorService: VendorService
+    public vendorService: VendorService,
+    private dialog: MatDialogRef<AddBatchComponent>
   ) {}
 
   addBatch() {
@@ -36,8 +37,8 @@ export class AddBatchComponent {
     this.addingBatch = true;
     this.batchService.createBatchs(batch).subscribe({
       next: (value: any) => {
-        this.batches = value.data;
         this.addingBatch = false;
+        this.dialog.close(value);
       },
       error: (err) => {
         this.addingBatch = false;

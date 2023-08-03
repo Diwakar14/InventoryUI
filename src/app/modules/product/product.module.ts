@@ -6,9 +6,10 @@ import { ProductComponent } from './product.component';
 import { SharedModule } from '../shared.module';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
-  declarations: [ProductComponent, CreateProductComponent],
+  declarations: [ProductComponent, CreateProductComponent, ProductCardComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,

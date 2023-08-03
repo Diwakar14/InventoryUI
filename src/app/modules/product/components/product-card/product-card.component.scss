@@ -1,0 +1,21 @@
+.card {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  transition: all ease 0.2s;
+
+  &:hover {
+    transition: all ease 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+  .card-image {
+    height: 260px;
+    overflow: hidden;
+  }
+  .card-body {
+    padding: 1.2rem;
+    h3 {
+      line-height: normal;
+    }
+  }
+}

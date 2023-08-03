@@ -48,7 +48,7 @@ export class AddCatalogComponent {
     });
   }
 
-  handleFileChange(icon: HTMLInputElement) {
-    this.formData.append('icon', icon.files?.item(0) || '');
+  handleImageSelect(file: any[]) {
+    this.formData.append('icon', file[0].file || '');
   }
 }
