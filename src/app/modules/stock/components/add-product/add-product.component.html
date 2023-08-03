@@ -1,5 +1,5 @@
 <header class="dialog-header">
-  <div class="dialog-title">Add Product</div>
+  <div class="dialog-title">Update Stock</div>
   <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
 </header>
 
@@ -31,6 +31,7 @@
             required: true
           }"
           [service]="vendorService"
+          [showDropdownIcon]="true"
           [searchKey]="'name'"
           (onItemSelected)="handleVendorSelected($event)"
         ></app-search-box>
@@ -45,6 +46,7 @@
           }"
           [service]="catalogService"
           [searchKey]="'name'"
+          [showDropdownIcon]="true"
           (onItemSelected)="handleCatalogSelected($event)"
         ></app-search-box>
       </div>

@@ -65,6 +65,21 @@ export class AddProductComponent {
     public fb: FormBuilder
   ) {}
 
+  selectedValue: string;
+  selectedCar: string;
+
+  foods: any[] = [
+    { value: 'steak-0', viewValue: 'Steak' },
+    { value: 'pizza-1', viewValue: 'Pizza' },
+    { value: 'tacos-2', viewValue: 'Tacos' },
+  ];
+
+  cars: any[] = [
+    { value: 'volvo', viewValue: 'Volvo' },
+    { value: 'saab', viewValue: 'Saab' },
+    { value: 'mercedes', viewValue: 'Mercedes' },
+  ];
+
   ngOnInit() {
     this.getCatalogs();
     this.getVendors();
