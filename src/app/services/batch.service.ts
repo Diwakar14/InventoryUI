@@ -17,8 +17,8 @@ export class BatchService {
     return this.http.get(env.baseUrl + 'Batch', { params: queryParam });
   }
 
-  getBatch(id: number) {
-    return this.http.get(env.baseUrl + 'Batch/' + id);
+  getBatch(vendorId: number) {
+    return this.http.get(env.baseUrl + 'Batch/' + vendorId);
   }
 
   createBatchs(batch: Batch) {

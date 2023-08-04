@@ -3,7 +3,11 @@
   .form-group {
     margin-right: 0.5rem;
     margin-bottom: 0.2rem;
-    width: 33%;
+    flex-direction: row;
+
+    .form-control {
+      width: 100%;
+    }
     .rounded-btn {
       outline: none;
       border-radius: 8px;

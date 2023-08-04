@@ -13,6 +13,7 @@ import { VendorService } from 'src/app/services/vendor.service';
 import { ExtraCharge, Product } from '../../models/Product';
 import { MatDialogRef } from '@angular/material/dialog';
 import { HttpParams } from '@angular/common/http';
+import { BatchService } from 'src/app/services/batch.service';
 
 @Component({
   selector: 'app-add-product',
@@ -22,6 +23,8 @@ import { HttpParams } from '@angular/common/http';
 export class AddProductComponent {
   catalogs: any[] = [];
   vendors: any[] = [];
+  batches: any[] = [];
+
   isVariant: boolean = false;
   isLoading: boolean = false;
   isSearchingCat: boolean = false;
@@ -61,24 +64,10 @@ export class AddProductComponent {
     public catalogService: CatalogService,
     public vendorService: VendorService,
     public productService: StockService,
+    public batchService: BatchService,
     public dialogRef: MatDialogRef<AddProductComponent>,
     public fb: FormBuilder
   ) {}
-
-  selectedValue: string;
-  selectedCar: string;
-
-  foods: any[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
-
-  cars: any[] = [
-    { value: 'volvo', viewValue: 'Volvo' },
-    { value: 'saab', viewValue: 'Saab' },
-    { value: 'mercedes', viewValue: 'Mercedes' },
-  ];
 
   ngOnInit() {
     this.getCatalogs();
@@ -93,7 +82,9 @@ export class AddProductComponent {
           name: i.name,
         }));
       },
-      error: (err) => {},
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 
@@ -101,6 +92,20 @@ export class AddProductComponent {
     this.vendorService.getVendors().subscribe({
       next: (value: any) => {
         this.vendors = value.data.map((i: any) => ({ id: i.id, name: i.name }));
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  getBatches(vendorId: number) {
+    this.batchService.getBatch(vendorId).subscribe({
+      next: (value: any) => {
+        this.batches = value.data;
+      },
+      error: (err) => {
+        console.log(err);
       },
     });
   }
@@ -156,6 +161,7 @@ export class AddProductComponent {
   }
   handleVendorSelected(event: any) {
     this.pForm.controls.vendorId.setValue(event.id);
+    this.getBatches(event.id);
   }
   handleProductSelected(event: any) {
     this.pForm.controls.parentProduct.controls.pProductId.setValue(event.id);

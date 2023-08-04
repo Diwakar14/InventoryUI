@@ -2,7 +2,6 @@ import { HttpParams } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
@@ -51,6 +50,12 @@ export class SearchBoxComponent implements AfterViewInit {
   @Input()
   showDropdownIcon: boolean = false;
 
+  @Input()
+  searchable: boolean = true;
+
+  @Input()
+  dropdownItems: any[] = [];
+
   @Output()
   onItemSelected = new EventEmitter();
 
@@ -64,7 +69,11 @@ export class SearchBoxComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    this.searchCatalog();
+    if (this.searchable) {
+      this.searchCatalog();
+    } else {
+      this.dropdownList = this.dropdownItems;
+    }
   }
 
   searchCatalog() {
@@ -82,7 +91,6 @@ export class SearchBoxComponent implements AfterViewInit {
       )
       .subscribe({
         next: (value: any) => {
-          console.log(value);
           this.isSearching = false;
           this.dropdownList = value.data;
         },

@@ -21,7 +21,7 @@
           (onItemSelected)="handleVendorSelected($event)"
         ></app-search-box>
       </div>
-      <div class="form-group">
+      <div class="form-group" *ngIf="pForm.controls.vendorId.value">
         <label for="">Batch</label>
 
         <app-search-box
@@ -30,7 +30,8 @@
             placeholder: 'Select Batch',
             required: true
           }"
-          [service]="vendorService"
+          [searchable]="false"
+          [dropdownItems]="batches"
           [showDropdownIcon]="true"
           [searchKey]="'name'"
           (onItemSelected)="handleVendorSelected($event)"
@@ -51,22 +52,7 @@
         ></app-search-box>
       </div>
       <div class="form-group">
-        <label for="">Stock</label>
-        <input
-          type="number"
-          autocomplete="off"
-          [min]="1"
-          class="form-control"
-          formControlName="stock"
-          placeholder="Number of products"
-          name="stock"
-        />
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Product</legend>
-      <div class="form-group">
+        <label for="">Product</label>
         <app-search-box
           [inputProps]="{
             placeholder: 'Search / Select name of Product',
@@ -77,6 +63,21 @@
           [service]="productService"
           (onItemSelected)="handleProductSelected($event)"
         ></app-search-box>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Stock</legend>
+      <div class="form-group">
+        <input
+          type="number"
+          autocomplete="off"
+          [min]="1"
+          class="form-control"
+          formControlName="stock"
+          placeholder="Number of products"
+          name="stock"
+        />
       </div>
     </fieldset>
 
@@ -109,15 +110,12 @@
           />
         </div>
       </div>
-      <div class="form-group" formGroupName="addCharges">
-        <mat-slide-toggle formControlName="hasAddCharge"
-          >Add Additional Charges and Tax Rates</mat-slide-toggle
-        >
-      </div>
-      <ng-container
-        formGroupName="addCharges"
-        *ngIf="pForm.get('addCharges')?.get('hasAddCharge')?.value"
-      >
+    </fieldset>
+
+    <fieldset>
+      <legend>Additional Charges</legend>
+
+      <ng-container formGroupName="addCharges">
         <div class="additionalCharge" formArrayName="charges">
           <ng-container
             *ngFor="let alias of additionalCharges.controls; let i = index"
@@ -144,13 +142,11 @@
                   name="valueType"
                   formControlName="valueType"
                   id=""
-                  class="form-control"
+                  class="form-control me-2"
                 >
                   <option value="Percentage">Percentage</option>
                   <option value="Value">Value</option>
                 </select>
-              </div>
-              <div class="form-group">
                 <button class="rounded-btn" (click)="removeCharges(i)">
                   <i class="bi bi-trash"></i>
                 </button>
