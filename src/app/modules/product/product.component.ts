@@ -39,8 +39,21 @@ export class ProductComponent implements OnInit {
   }
 
   openProdAdd() {
-    this.dialog.open(CreateProductComponent, {
-      width: '500px',
-    });
+    this.dialog
+      .open(CreateProductComponent, {
+        width: '500px',
+      })
+      .afterClosed()
+      .subscribe({
+        next: (value: any) => {
+          if (value) {
+            this.products.unshift({
+              ...value,
+              featureImage: env.resourceUrl + value.featureImage,
+            });
+          }
+        },
+        error: () => {},
+      });
   }
 }

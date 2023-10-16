@@ -1,165 +1,174 @@
 <header class="dialog-header">
-  <div class="dialog-title">Update Stock</div>
-  <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
+  <div class="dialog-title">Add Stock</div>
+  <button class="btn btn-sm btn-light" mat-dialog-close>
+    <i class="bi bi-x"></i>
+  </button>
 </header>
 
 <div class="dialog-body">
   <form [formGroup]="pForm" (ngSubmit)="handleSubmit()">
-    <fieldset>
-      <legend>Inventory</legend>
-      <div class="form-group">
-        <label for="">Vendor</label>
+    <div class="form-group">
+      <label for="">Vendor</label>
 
-        <app-search-box
-          [inputProps]="{
-            name: 'vendorSearch',
-            placeholder: 'Search / Select Vendor',
-            required: true
-          }"
-          [service]="vendorService"
-          [searchKey]="'name'"
-          (onItemSelected)="handleVendorSelected($event)"
-        ></app-search-box>
-      </div>
-      <div class="form-group" *ngIf="pForm.controls.vendorId.value">
-        <label for="">Batch</label>
+      <app-search-box
+        [inputProps]="{
+          name: 'vendorSearch',
+          placeholder: 'Search / Select Vendor',
+          required: true
+        }"
+        [service]="vendorService"
+        [searchKey]="'name'"
+        (onItemSelected)="handleVendorSelected($event)"
+      ></app-search-box>
+    </div>
+    <div
+      class="form-group"
+      *ngIf="pForm.controls.vendorId.value && loadingVendors"
+    >
+      <label for="">Batch</label>
 
-        <app-search-box
-          [inputProps]="{
-            name: 'batchSearch',
-            placeholder: 'Select Batch',
-            required: true
-          }"
-          [searchable]="false"
-          [dropdownItems]="batches"
-          [showDropdownIcon]="true"
-          [searchKey]="'name'"
-          (onItemSelected)="handleVendorSelected($event)"
-        ></app-search-box>
-      </div>
-      <div class="form-group">
-        <label for="">Catalog </label>
-        <app-search-box
-          [inputProps]="{
-            name: 'catalogSearch',
-            placeholder: 'Search / Select Catalog',
-            required: true
-          }"
-          [service]="catalogService"
-          [searchKey]="'name'"
-          [showDropdownIcon]="true"
-          (onItemSelected)="handleCatalogSelected($event)"
-        ></app-search-box>
-      </div>
-      <div class="form-group">
-        <label for="">Product</label>
-        <app-search-box
-          [inputProps]="{
-            placeholder: 'Search / Select name of Product',
-            required: true,
-            name: 'searchProduct'
-          }"
-          [searchKey]="'name'"
-          [service]="productService"
-          (onItemSelected)="handleProductSelected($event)"
-        ></app-search-box>
-      </div>
-    </fieldset>
+      <app-search-box
+        [inputProps]="{
+          name: 'batchSearch',
+          placeholder: 'Select Batch',
+          required: true
+        }"
+        [searchable]="false"
+        [dropdownItems]="batches"
+        [showDropdownIcon]="true"
+        [searchKey]="'name'"
+        (onItemSelected)="handleBatchSelected($event)"
+      ></app-search-box>
+    </div>
+    <div
+      class="form-group"
+      *ngIf="pForm.controls.batchId.value && loadingBatches"
+    >
+      <label for="">Catalog </label>
+      <app-search-box
+        [inputProps]="{
+          name: 'catalogSearch',
+          placeholder: 'Search / Select Catalog',
+          required: true
+        }"
+        [searchable]="false"
+        [searchKey]="'name'"
+        [dropdownItems]="catalogs"
+        [showDropdownIcon]="true"
+        (onItemSelected)="handleCatalogSelected($event)"
+      ></app-search-box>
+    </div>
+    <div
+      class="form-group mb-2"
+      *ngIf="pForm.controls.catalogId.value && loadingCatalogs"
+    >
+      <label for="">Product</label>
+      <app-search-box
+        [inputProps]="{
+          placeholder: 'Search / Select name of Product',
+          required: true,
+          name: 'searchProduct'
+        }"
+        [searchable]="false"
+        [searchKey]="'name'"
+        [dropdownItems]="products"
+        (onItemSelected)="handleProductSelected($event)"
+      ></app-search-box>
+    </div>
 
-    <fieldset>
-      <legend>Stock</legend>
-      <div class="form-group">
+    <div class="form-group mb-2">
+      <label for="">Stock</label>
+
+      <input
+        type="number"
+        autocomplete="off"
+        [min]="1"
+        class="form-control"
+        formControlName="stock"
+        placeholder="Number of products"
+        name="stock"
+      />
+    </div>
+
+    <div class="row form-item-group mb-0">
+      <div class="col form-group">
+        <label for="">Sale Price (₹)</label>
+        <input
+          type="number"
+          autocomplete="off"
+          class="form-control"
+          [min]="1"
+          formControlName="salePrice"
+          placeholder="Enter sale price"
+          name="salePrice"
+        />
+      </div>
+
+      <div class="col form-group">
+        <label for="">Actual Price (₹)</label>
         <input
           type="number"
           autocomplete="off"
           [min]="1"
           class="form-control"
-          formControlName="stock"
-          placeholder="Number of products"
-          name="stock"
+          formControlName="actualPrice"
+          placeholder="Enter actual price"
+          name="actualPrice"
         />
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Pricing</legend>
-      <div class="row form-item-group">
-        <div class="form-group">
-          <label for="">Sale Price (₹)</label>
-          <input
-            type="number"
-            autocomplete="off"
-            class="form-control"
-            [min]="1"
-            formControlName="salePrice"
-            placeholder="Enter sale price"
-            name="salePrice"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="">Actual Price (₹)</label>
-          <input
-            type="number"
-            autocomplete="off"
-            [min]="1"
-            class="form-control"
-            formControlName="actualPrice"
-            placeholder="Enter actual price"
-            name="actualPrice"
-          />
-        </div>
+    <div class="additionalCharge" formArrayName="charges">
+      <div class="d-flex pb-2">
+        <label for="">Additional Charge</label>
+        <button
+          class="btn btn-primary btn-sm ms-auto"
+          (click)="addMoreCharges()"
+        >
+          <i class="bi bi-plus-lg"></i> Add
+        </button>
       </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Additional Charges</legend>
-
-      <ng-container formGroupName="addCharges">
-        <div class="additionalCharge" formArrayName="charges">
-          <ng-container
-            *ngFor="let alias of additionalCharges.controls; let i = index"
-          >
-            <div class="row d-row" [formGroupName]="i">
-              <div class="form-group">
-                <input
-                  type="text"
-                  formControlName="text"
-                  class="form-control"
-                  placeholder="Text"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  formControlName="value"
-                  class="form-control"
-                  placeholder="Value"
-                />
-              </div>
-              <div class="form-group">
-                <select
-                  name="valueType"
-                  formControlName="valueType"
-                  id=""
-                  class="form-control me-2"
-                >
-                  <option value="Percentage">Percentage</option>
-                  <option value="Value">Value</option>
-                </select>
-                <button class="rounded-btn" (click)="removeCharges(i)">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-            </div>
-          </ng-container>
-
-          <button mat-stroked-button (click)="addMoreCharges()">
-            <i class="bi bi-plus-lg"></i>
-          </button>
+      <ng-container
+        *ngFor="let alias of additionalCharges.controls; let i = index"
+      >
+        <div class="row mb-2" [formGroupName]="i">
+          <div class="col-3">
+            <input
+              type="text"
+              formControlName="text"
+              class="form-control"
+              placeholder="Text"
+            />
+          </div>
+          <div class="col-3">
+            <input
+              type="text"
+              formControlName="value"
+              class="form-control"
+              placeholder="Value"
+            />
+          </div>
+          <div class="col-3">
+            <select
+              name="valueType"
+              formControlName="valueType"
+              class="form-select"
+            >
+              <option value="Percentage">Percentage</option>
+              <option value="Value">Value</option>
+            </select>
+          </div>
+          <div class="col-3 align-items-center d-flex">
+            <button
+              class="btn btn-danger btn-sm ms-auto d-block"
+              (click)="removeCharges(i)"
+            >
+              <i class="bi bi-trash"></i>Remove
+            </button>
+          </div>
         </div>
       </ng-container>
-    </fieldset>
+    </div>
 
     <!-- <div class="form-group" formGroupName="parentProduct">
       <mat-slide-toggle
@@ -185,9 +194,9 @@
 
     <!-- {{ pForm.value | json }} -->
 
-    <div class="dialog-footer">
-      <button mat-button mat-dialog-close>Close</button>
-      <button mat-flat-button color="primary" type="submit">Save</button>
+    <div class="dialog-footer mt-4 pt-3 border-top">
+      <button class="btn btn-outline-secondary" mat-dialog-close>Close</button>
+      <button class="btn btn-primary" type="submit">Save</button>
     </div>
   </form>
 </div>

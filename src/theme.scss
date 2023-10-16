@@ -23,6 +23,10 @@ $accent-palette: map.get($color-config, "accent");
 $warn-palette: map.get($color-config, "warn");
 $is-dark-theme: map.get($color-config, "is-dark");
 
+:root {
+  --border-radius: 0.25rem;
+}
+
 .red {
   color: mat.get-color-from-palette($warn-palette, 500);
 }
@@ -53,11 +57,11 @@ $is-dark-theme: map.get($color-config, "is-dark");
 .mat-mdc-flat-button,
 .mat-mdc-unelevated-button {
   border-color: #eee !important;
-  border-radius: 8px !important;
+  border-radius: var(--border-radius) !important;
 }
 
 .mat-mdc-dialog-container {
-  --mdc-dialog-container-shape: 12px !important;
+  --mdc-dialog-container-shape: var(--border-radius) !important;
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base {
@@ -78,16 +82,17 @@ $is-dark-theme: map.get($color-config, "is-dark");
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1.2rem;
-  background-color: mat.get-color-from-palette($primary-palette, 500);
+  padding: 0.5rem 0.8rem;
+  background-color: var(--bs-primary);
   color: white;
   .dialog-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
 }
 
 .dialog-body {
-  padding: 1.4rem;
+  padding: 1rem;
   max-height: 600px;
   overflow-y: auto;
 }
@@ -102,7 +107,7 @@ $is-dark-theme: map.get($color-config, "is-dark");
 }
 
 .table-container {
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   border: 1px solid #eee;
   overflow: hidden;
 }
@@ -115,7 +120,7 @@ table {
     background-color: rgba($color: #eee, $alpha: 0.5);
     th {
       text-align: left;
-      padding: 1rem 0.5rem;
+      padding: 0.5rem;
       text-transform: uppercase;
       font-weight: 500;
       color: #888;
@@ -129,8 +134,19 @@ table {
     }
     td {
       text-align: left;
-      padding: 0.6rem 0.5rem;
+      padding: 0.5rem;
       border-bottom: 1px solid #eee;
     }
   }
+}
+
+.btn-icon {
+  border-radius: 99px;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  margin: 0.2rem;
+  background-color: #efefef;
 }

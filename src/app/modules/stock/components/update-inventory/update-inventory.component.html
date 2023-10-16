@@ -1,0 +1,79 @@
+<header class="dialog-header">
+  <div class="dialog-title">Update Inventory</div>
+  <button class="btn btn-light btn-sm" mat-dialog-close>
+    <i class="bi bi-x"></i>
+  </button>
+</header>
+
+<div class="dialog-body">
+  <form [formGroup]="pForm" (ngSubmit)="handleSubmit()">
+    <div class="form-group">
+      <label for="">Vendor</label>
+
+      <app-search-box
+        [inputProps]="{
+          name: 'vendorSearch',
+          placeholder: 'Search / Select Vendor',
+          required: true
+        }"
+        [service]="vendorService"
+        [searchKey]="'name'"
+        (onItemSelected)="handleVendorSelected($event)"
+      ></app-search-box>
+    </div>
+    <div
+      class="form-group"
+      *ngIf="pForm.controls.vendorId.value && loadingVendors"
+    >
+      <label for="">Batch</label>
+
+      <app-search-box
+        [inputProps]="{
+          name: 'batchSearch',
+          placeholder: 'Select Batch',
+          required: true
+        }"
+        [searchable]="false"
+        [dropdownItems]="batches"
+        [showDropdownIcon]="true"
+        [searchKey]="'name'"
+        (onItemSelected)="handleBatchSelected($event)"
+      ></app-search-box>
+    </div>
+    <div class="form-group" *ngIf="pForm.controls.batchId.value">
+      <label for="">Catalog </label>
+      <app-search-box
+        [inputProps]="{
+          name: 'catalogSearch',
+          placeholder: 'Search / Select Catalog',
+          required: true
+        }"
+        [searchable]="true"
+        [searchKey]="'name'"
+        [service]="catalogService"
+        [showDropdownIcon]="true"
+        (onItemSelected)="handleCatalogSelected($event)"
+      ></app-search-box>
+    </div>
+    <div class="form-group mb-0" *ngIf="pForm.controls.catalogId.value">
+      <label for="">Product</label>
+      <app-search-box
+        [inputProps]="{
+          placeholder: 'Search / Select name of Product',
+          required: true,
+          name: 'searchProduct'
+        }"
+        [searchable]="true"
+        [searchKey]="'name'"
+        [dropdownItems]="products"
+        [service]="productService"
+        (onItemSelected)="handleProductSelected($event)"
+      ></app-search-box>
+    </div>
+
+    <div class="dialog-footer mt-4 pt-3 border-top">
+      <button class="btn btn-outline-secondary" mat-dialog-close>Close</button>
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</div>

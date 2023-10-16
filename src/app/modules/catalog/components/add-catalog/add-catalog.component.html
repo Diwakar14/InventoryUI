@@ -1,6 +1,8 @@
 <header class="dialog-header">
   <div class="dialog-title">Create Catalog</div>
-  <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
+  <button class="btn btn-light btn-sm" mat-dialog-close>
+    <i class="bi bi-x"></i>
+  </button>
 </header>
 <app-loader
   [size]="34"
@@ -49,9 +51,9 @@
       ></textarea>
     </div>
 
-    <div class="dialog-footer">
-      <button mat-button mat-dialog-close>Close</button>
-      <button mat-flat-button color="primary" type="submit">Save</button>
+    <div class="dialog-footer mt-4 pt-3 border-top">
+      <button class="btn btn-outline-secondary" mat-dialog-close>Close</button>
+      <button class="btn btn-primary" type="submit">Save</button>
     </div>
   </form>
 </div>

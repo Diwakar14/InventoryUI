@@ -1,0 +1,121 @@
+<div class="card">
+  <div class="card-body">
+    <form>
+      <div class="form-group">
+        <label for="vendor">Vendor</label>
+        <select
+          class="form-select"
+          (change)="handleVendorChange($event.target)"
+        >
+          <option [value]="i" *ngFor="let vendor of vendors; index as i">
+            {{ vendor.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="vendor">Batches</label>
+        <input
+          type="search"
+          class="form-control mb-2"
+          placeholder="Search Batches"
+        />
+
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let batch of batches; index as i"
+            (click)="handleBatchChange(batch)"
+          >
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="batch-{{ i }}"
+              />
+              <label class="form-check-label mb-0" for="batch-{{ i }}">
+                {{ batch.name }}
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="vendor">Category</label>
+        <input
+          type="search"
+          class="form-control mb-2"
+          placeholder="Search Category"
+        />
+
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let catalog of catalogs; index as i"
+          >
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="{{ i }}"
+              />
+              <label class="form-check-label mb-0" for="{{ i }}">
+                {{ catalog.name }}
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="vendor">Product</label>
+        <input
+          type="search"
+          class="form-control mb-2"
+          placeholder="Search Products"
+        />
+
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let product of products; index as i"
+          >
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="{{ i }}"
+              />
+              <label class="form-check-label mb-0" for="{{ i }}">
+                {{ product.name }}
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="vendor">Prices</label>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let price of prices; index as i">
+            Cost Price: {{ price.currency + "" + price.costPrice }} - Sale
+            Price: {{ price.currency + "" + price.salePrice }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="vendor">Stock</label>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let stock of stocks; index as i">
+            {{ stock.current }} / {{ stock.base }}
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>

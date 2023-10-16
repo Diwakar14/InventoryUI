@@ -15,26 +15,16 @@
   </div>
 
   <div class="action">
-    <button
-      mat-stroked-button
-      color="primary"
-      class="me-2"
-      (click)="openVendorDialog()"
-    >
+    <button class="btn btn-outline-secondary me-2" (click)="openVendorDialog()">
       <i class="bi bi-person-fill-add"></i>
       Create Vendor
     </button>
-    <button
-      mat-stroked-button
-      color="primary"
-      class="me-2"
-      (click)="openBatchDialog()"
-    >
+    <button class="btn btn-outline-secondary me-2" (click)="openBatchDialog()">
       <i class="bi bi-plus-lg"></i>
       Create Batch
     </button>
 
-    <button mat-raised-button color="primary">
+    <button class="btn btn-outline-primary me-2">
       <i class="bi bi-bag-plus-fill"></i>
       Create Order
     </button>
@@ -68,8 +58,11 @@
           <td class="text-center">{{ vendor.createdAt | date }}</td>
           <td class="text-center">{{ vendor.updatedAt | date }}</td>
           <td class="text-right">
-            <button class="myBtn">
-              <i class="bi bi-three-dots-vertical"></i>
+            <button class="btn btn-sm btn-outline-info me-2">
+              <i class="bi bi-pen"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger">
+              <i class="bi bi-trash"></i>
             </button>
           </td>
         </tr>

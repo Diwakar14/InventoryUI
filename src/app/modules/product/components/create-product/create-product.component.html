@@ -1,6 +1,8 @@
 <header class="dialog-header">
   <div class="dialog-title">Create Product</div>
-  <button mat-icon-button mat-dialog-close><i class="bi bi-x"></i></button>
+  <button class="btn btn-sm btn-light" mat-dialog-close>
+    <i class="bi bi-x"></i>
+  </button>
 </header>
 <app-loader
   [size]="34"
@@ -52,31 +54,45 @@
     </div>
 
     <div class="form-group">
-      <label for="">Additional Attributes</label>
+      <div class="d-flex mb-2">
+        <label for="">Additional Attributes</label>
+        <button
+          class="btn btn-sm btn-primary ms-auto d-block"
+          (click)="addMoreCharges()"
+        >
+          <i class="bi bi-plus-lg"></i>
+        </button>
+      </div>
       <ng-container formArrayName="addAttributes">
         <ng-container *ngFor="let attr of attributes.controls; index as i">
-          <div class="row attr-row" [formGroupName]="i">
-            <input
-              type="text"
-              placeholder="Enter attribute text"
-              formControlName="text"
-              class="form-control"
-            />
-            <input
-              type="text"
-              placeholder="Enter attribute value"
-              formControlName="value"
-              class="form-control"
-            />
-            <button mat-stroked-button (click)="removeAttr(i)">
-              <i class="bi bi-trash"></i>
-            </button>
+          <div class="row mb-2" [formGroupName]="i">
+            <div class="col">
+              <input
+                type="text"
+                placeholder="Enter attribute text"
+                formControlName="text"
+                class="form-control"
+              />
+            </div>
+            <div class="col">
+              <input
+                type="text"
+                placeholder="Enter attribute value"
+                formControlName="value"
+                class="form-control"
+              />
+            </div>
+            <div class="col align-items-center d-flex">
+              <button
+                class="btn btn-sm btn-danger ms-auto"
+                (click)="removeAttr(i)"
+              >
+                <i class="bi bi-trash"></i> Remove
+              </button>
+            </div>
           </div>
         </ng-container>
       </ng-container>
-      <button mat-stroked-button (click)="addMoreCharges()">
-        <i class="bi bi-plus-lg"></i>
-      </button>
     </div>
 
     <div class="form-group">
@@ -84,9 +100,9 @@
         >Active</mat-slide-toggle
       >
     </div>
-    <div class="dialog-footer">
-      <button mat-button mat-dialog-close>Close</button>
-      <button mat-flat-button color="primary" type="submit">Save</button>
+    <div class="dialog-footer mt-4 pt-3 border-top">
+      <button class="btn btn-outline-secondary">Close</button>
+      <button class="btn btn-primary" type="submit">Save</button>
     </div>
   </form>
 </div>

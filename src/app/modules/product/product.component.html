@@ -15,7 +15,7 @@
   </div>
 
   <div class="action">
-    <button mat-flat-button color="accent" class="me-2" (click)="openProdAdd()">
+    <button class="btn btn-primary me-2" (click)="openProdAdd()">
       <i class="bi bi-plus-lg"></i>
       Create Product
     </button>
@@ -23,10 +23,9 @@
 </div>
 
 <div class="main-content">
-  <div class="grid-view">
-    <app-product-card
-      *ngFor="let prod of products"
-      [data]="prod"
-    ></app-product-card>
+  <div class="row">
+    <div class="col-lg-2 col-md-4 col-sm-6" *ngFor="let prod of products">
+      <app-product-card [data]="prod"></app-product-card>
+    </div>
   </div>
 </div>

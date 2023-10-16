@@ -1,0 +1,35 @@
+.backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  width: 100%;
+  height: 100vh;
+  z-index: 4;
+}
+.side-panel {
+  position: fixed;
+  right: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  top: 1rem;
+  z-index: 5;
+  min-width: 550px;
+  max-width: 600px;
+  height: calc(100vh - 2rem);
+  transition: all ease 0.2s;
+  transform: translateX(16px);
+  .card-title {
+    padding: 1rem;
+  }
+  .card-body {
+    overflow-y: auto;
+  }
+}
+
+.side-panel-opened {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition: all ease 0.2s;
+}

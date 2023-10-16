@@ -11,6 +11,10 @@ export class StockService {
     return this.http.get(env.baseUrl + 'Product');
   }
 
+  getStocks() {
+    return this.http.get(env.baseUrl + 'Inventory');
+  }
+
   search(queryParam: HttpParams) {
     return this.http.get(env.baseUrl + 'Product', { params: queryParam });
   }

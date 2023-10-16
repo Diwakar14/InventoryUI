@@ -10,10 +10,9 @@ import {
 import { CatalogService } from 'src/app/services/catalog.service';
 import { StockService } from 'src/app/services/stock.service';
 import { VendorService } from 'src/app/services/vendor.service';
-import { ExtraCharge, Product } from '../../models/Product';
 import { MatDialogRef } from '@angular/material/dialog';
-import { HttpParams } from '@angular/common/http';
 import { BatchService } from 'src/app/services/batch.service';
+import { InventoryService } from 'src/app/services/inventory.service';
 
 @Component({
   selector: 'app-add-product',
@@ -24,40 +23,35 @@ export class AddProductComponent {
   catalogs: any[] = [];
   vendors: any[] = [];
   batches: any[] = [];
+  products: any[] = [];
 
   isVariant: boolean = false;
   isLoading: boolean = false;
   isSearchingCat: boolean = false;
   isSearchingVend: boolean = false;
+  loadingBatches: boolean = false;
+  loadingVendors: boolean = false;
+  loadingCatalogs: boolean = false;
 
   additionalChargeControls = this.fb.group({
-    text: ['', Validators.required],
-    value: ['', Validators.required],
+    text: ['GST', Validators.required],
+    value: ['3', Validators.required],
     valueType: ['Percentage', Validators.required],
   });
 
   pForm = this.fb.group({
-    name: ['', Validators.required],
     salePrice: [0, Validators.required],
     actualPrice: [0, Validators.required],
     stock: [0, Validators.required],
-    description: [''],
     catalogId: [0, Validators.required],
     vendorId: [0, Validators.required],
     batchId: [0, Validators.required],
-    active: [true, Validators.required],
-    parentProduct: this.fb.group({
-      addParentProduct: [false],
-      pProductId: [],
-    }),
-    addCharges: this.fb.group({
-      hasAddCharge: [false],
-      charges: this.fb.array([this.additionalChargeControls]),
-    }),
+    productId: [0, Validators.required],
+    charges: this.fb.array([this.additionalChargeControls]),
   });
 
   get additionalCharges() {
-    return this.pForm.get('addCharges')?.get('charges') as FormArray;
+    return this.pForm?.get('charges') as FormArray;
   }
 
   constructor(
@@ -65,27 +59,13 @@ export class AddProductComponent {
     public vendorService: VendorService,
     public productService: StockService,
     public batchService: BatchService,
+    private inventoryService: InventoryService,
     public dialogRef: MatDialogRef<AddProductComponent>,
     public fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.getCatalogs();
     this.getVendors();
-  }
-
-  getCatalogs() {
-    this.catalogService.getCatalogs().subscribe({
-      next: (value: any) => {
-        this.catalogs = value.data.map((i: any) => ({
-          id: i.id,
-          name: i.name,
-        }));
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
   }
 
   getVendors() {
@@ -99,13 +79,53 @@ export class AddProductComponent {
     });
   }
 
-  getBatches(vendorId: number) {
-    this.batchService.getBatch(vendorId).subscribe({
+  getVendor(vendorId: number) {
+    this.loadingVendors = false;
+    this.vendorService.getVendor(vendorId).subscribe({
       next: (value: any) => {
-        this.batches = value.data;
+        this.batches = value.data?.batches.map((i: any) => ({
+          id: i.id,
+          name: i.name,
+        }));
+        this.loadingVendors = true;
       },
       error: (err) => {
         console.log(err);
+        this.loadingVendors = false;
+      },
+    });
+  }
+
+  getCatalog(catalogId: number) {
+    this.loadingCatalogs = false;
+    this.catalogService.getCatalog(catalogId).subscribe({
+      next: (value: any) => {
+        this.products = value.data.products.map((i: any) => ({
+          id: i.id,
+          name: i.name,
+        }));
+        this.loadingCatalogs = true;
+      },
+      error: (err) => {
+        console.log(err);
+        this.loadingCatalogs = false;
+      },
+    });
+  }
+
+  getBatch(batchId: number) {
+    this.loadingBatches = false;
+    this.batchService.getBatch(batchId).subscribe({
+      next: (value: any) => {
+        this.catalogs = value.data.catagories.map((i: any) => ({
+          id: i.id,
+          name: i.name,
+        }));
+        this.loadingBatches = true;
+      },
+      error: (err) => {
+        console.log(err);
+        this.loadingBatches = false;
       },
     });
   }
@@ -117,32 +137,41 @@ export class AddProductComponent {
   handleSubmit() {
     let form = this.pForm;
     console.log(form.value);
-    this.isLoading = true;
 
     if (form.valid) {
       let f = form.value;
-      let product: Product = {
-        name: f.name || '',
-        description: f.description || '',
-        salePrice: f.salePrice || 0,
-        actualPrice: f.actualPrice || 0,
-        stock: f.stock || 0,
-        parentId: f.parentProduct?.pProductId || 0,
-        extraCharge: f.addCharges?.charges as Array<any>,
-        active: f.active || false,
-        catalogId: f.catalogId || 0,
-        vendorId: f.vendorId || 0,
-        currency: '₹',
+      console.log(f);
+
+      let prod = {
+        batchId: f.batchId,
+        productId: f.productId,
+        vendorId: f.vendorId,
+        categoryId: f.catalogId,
+        price: {
+          salePrice: f.salePrice,
+          costPrice: f.actualPrice,
+        },
+        charges: f.charges?.map((c) => {
+          return {
+            key: c.text,
+            value: c.value,
+            valueType: c.valueType,
+          };
+        }),
+        stock: {
+          base: f.stock,
+          current: f.stock,
+        },
       };
+      this.isLoading = true;
 
-      console.log(product);
-
-      // this.productService.createProducts(product).subscribe({
-      //   next: (value) => {
-      //     this.isLoading = false;
-      //     this.dialogRef.close(value);
-      //   },
-      // });
+      this.inventoryService.create(prod).subscribe({
+        next: (value) => {
+          this.isLoading = false;
+          console.log(value);
+          this.dialogRef.close(value);
+        },
+      });
     } else {
       this.isLoading = false;
     }
@@ -153,18 +182,34 @@ export class AddProductComponent {
   }
 
   addMoreCharges() {
-    this.additionalCharges.push(this.additionalChargeControls);
+    this.additionalCharges.push(
+      this.fb.group({
+        text: ['', Validators.required],
+        value: ['', Validators.required],
+        valueType: ['Percentage', Validators.required],
+      })
+    );
+  }
+
+  handleVendorSelected(event: any) {
+    console.log(event);
+
+    this.pForm.controls.vendorId.setValue(event.id);
+    this.getVendor(event.id);
+  }
+
+  handleBatchSelected(event: any) {
+    this.pForm.controls.batchId.setValue(event.id);
+    this.getBatch(event.id);
   }
 
   handleCatalogSelected(event: any) {
     this.pForm.controls.catalogId.setValue(event.id);
+    this.getCatalog(event.id);
   }
-  handleVendorSelected(event: any) {
-    this.pForm.controls.vendorId.setValue(event.id);
-    this.getBatches(event.id);
-  }
+
   handleProductSelected(event: any) {
-    this.pForm.controls.parentProduct.controls.pProductId.setValue(event.id);
+    this.pForm.controls.productId.setValue(event.id);
   }
 
   removeCharges(i: number) {

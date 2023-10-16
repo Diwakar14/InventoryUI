@@ -5,6 +5,10 @@ import { CreateOrderComponent } from './components/create-order/create-order.com
 import { StockService } from 'src/app/services/stock.service';
 import { OrderStatusComponent } from './components/order-status/order-status.component';
 import { Sort } from '@angular/material/sort';
+import { ComponentType } from 'src/app/components/ComponentType';
+import { SidePanelService } from 'src/app/components/side-panel/side-panel.service';
+import { UpdateStockComponent } from './components/update-stock/update-stock.component';
+import { UpdateInventoryComponent } from './components/update-inventory/update-inventory.component';
 
 @Component({
   selector: 'app-stock',
@@ -17,12 +21,13 @@ export class StockComponent implements OnInit {
   loadingProduct: boolean = false;
   constructor(
     private dialog: MatDialog,
-    private productService: StockService
+    private productService: StockService,
+    private sidebarService: SidePanelService
   ) {}
 
   ngOnInit(): void {
     this.loadingProduct = true;
-    this.productService.getProducts().subscribe({
+    this.productService.getStocks().subscribe({
       next: (value: any) => {
         this.products = value.data;
         this.sortedProducts = value.data;
@@ -67,6 +72,24 @@ export class StockComponent implements OnInit {
           });
         }
       },
+    });
+  }
+
+  openUpdateInventory() {
+    let dialogRef = this.dialog.open(UpdateInventoryComponent, {
+      width: '30%',
+      disableClose: true,
+      id: 'update-inventory-dialog',
+      data: {},
+    });
+  }
+
+  openSidePanel(productId: string) {
+    this.sidebarService.setSidePanelState({
+      component: new ComponentType(UpdateStockComponent, null),
+      isSidePanOpened: true,
+      data: { productId },
+      title: 'Update Inventory',
     });
   }
 

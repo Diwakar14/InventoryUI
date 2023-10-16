@@ -8,9 +8,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SidePanelComponent } from './components/side-panel/side-panel.component';
+import { PortalDirective } from './directives/portal.directive';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, ToolbarComponent],
+  declarations: [
+    AppComponent,
+    ToolbarComponent,
+    PortalDirective,
+    SidePanelComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -18,6 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatDialogModule,
     MatButtonModule,
     HttpClientModule,
+    ToastrModule.forRoot({
+      progressBar: true,
+      positionClass: 'toast-bottom-right',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

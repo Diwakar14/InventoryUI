@@ -15,11 +15,15 @@
   </div>
 
   <div class="action">
-    <button mat-flat-button color="accent" (click)="openAddProduct()">
+    <button class="btn btn-success" (click)="openAddProduct()">
       <i class="bi bi-plus-lg"></i>
-      Update Stock
+      Add Stock
     </button>
-    <button mat-flat-button color="primary" (click)="openCreateOrder()">
+    <button class="btn btn-primary me-2" (click)="openUpdateInventory()">
+      <i class="bi bi-bag-plus-fill"></i>
+      Update Inventory
+    </button>
+    <button class="btn btn-warning" (click)="openCreateOrder()">
       <i class="bi bi-bag-plus-fill"></i>
       Create Order
     </button>
@@ -31,11 +35,11 @@
     <table matSort (matSortChange)="sortData($event)">
       <thead>
         <th class="text-center" style="width: 3%">#</th>
-        <th class="text-center">SKU</th>
-        <th class="text-center">QR</th>
-        <th mat-sort-header="name" style="width: 20%">Name</th>
+        <th>SKU</th>
+        <th mat-sort-header="name" style="width: 15%">Name</th>
         <th>Catalog</th>
         <th>Vendor</th>
+        <th>Batch</th>
         <th>Sale Price</th>
         <th>Actual Price</th>
         <th class="text-left">Margin</th>
@@ -47,43 +51,67 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let product of sortedProducts">
+        <tr *ngFor="let inventory of sortedProducts">
           <td class="text-center">
-            <mat-checkbox></mat-checkbox>
+            <input type="checkbox" name="" id="" />
           </td>
-          <td class="text-center">KU4</td>
-          <td class="text-center">KU4</td>
-          <td class="bold">{{ product.name | truncate : 40 }}</td>
-          <td>{{ product?.catalog?.name }}</td>
-          <td>{{ product?.vendor?.name }}</td>
-          <td>{{ product?.salePrice | currency : "₹" }}</td>
-          <td>{{ product?.actualPrice | currency : "₹" }}</td>
+          <td>#{{ inventory?.product?.slug.split("-")[0].toUpperCase() }}</td>
+          <td class="bold">{{ inventory?.product.name | truncate : 40 }}</td>
+          <td>{{ inventory?.catalog?.name }}</td>
+          <td>
+            {{ inventory?.vendor?.name }}
+          </td>
+          <td>
+            {{ inventory?.batch?.name }}
+          </td>
+          <td>
+            {{ inventory?.price?.salePrice | currency : "₹" }}
+          </td>
+          <td>
+            {{ inventory?.price?.costPrice | currency : "₹" }}
+          </td>
           <td class="text-left bold">
             <span
               [ngClass]="
-                product.salePrice - product.actualPrice > 0 ? 'green' : 'red'
+                inventory?.price?.salePrice - inventory?.price?.costPrice > 0
+                  ? 'green'
+                  : 'red'
               "
             >
-              {{ product.salePrice - product.actualPrice | currency : "₹" }}
+              {{
+                inventory?.price?.salePrice - inventory?.price?.costPrice
+                  | currency : "₹"
+              }}
             </span>
             <i
               class="bi bi-arrow-up green"
-              *ngIf="product.salePrice - product.actualPrice > 0"
+              *ngIf="
+                inventory?.price?.salePrice - inventory?.price?.costPrice > 0
+              "
             ></i>
             <i
               class="bi bi-arrow-down red"
-              *ngIf="product.salePrice - product.actualPrice < 0"
+              *ngIf="
+                inventory?.price?.salePrice - inventory?.price?.costPrice < 0
+              "
             ></i>
           </td>
-          <td class="bold text-center">4/{{ product.stock }}</td>
-          <td class="text-center">
-            <i class="bi bi-fire red" *ngIf="product.active"></i>
-            <i class="bi bi-x-lg red" *ngIf="!product.active"></i>
+          <td class="bold text-center">
+            {{ inventory.stock?.current || "-" }}/{{
+              inventory.stock?.base || "-"
+            }}
           </td>
-          <td class="text-center">{{ product.createdAt | date }}</td>
-          <td class="text-center">{{ product.updatedAt | date }}</td>
+          <td class="text-center">
+            <i class="bi bi-fire red" *ngIf="inventory?.product.isActive"></i>
+            <i class="bi bi-x-lg red" *ngIf="!inventory?.product.isActive"></i>
+          </td>
+          <td class="text-center">{{ inventory?.product.createdAt | date }}</td>
+          <td class="text-center">{{ inventory?.product.updatedAt | date }}</td>
           <td class="text-right">
-            <button mat-icon-button>
+            <button
+              class="btn btn-sm"
+              (click)="openSidePanel(inventory.product.id)"
+            >
               <i class="bi bi-three-dots-vertical"></i>
             </button>
           </td>
@@ -97,13 +125,5 @@
       [includeBackdrop]="false"
       *ngIf="loadingProduct"
     ></app-loader>
-    <mat-paginator
-      *ngIf="!loadingProduct"
-      [length]="100"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page"
-    >
-    </mat-paginator>
   </div>
 </div>

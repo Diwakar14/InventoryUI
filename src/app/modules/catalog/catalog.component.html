@@ -16,7 +16,7 @@
   </div>
 
   <div class="action">
-    <button mat-flat-button color="accent" (click)="openCatalogAdd()">
+    <button class="btn btn-primary" (click)="openCatalogAdd()">
       <i class="bi bi-plus-lg"></i>
       Add New Catalog
     </button>
@@ -37,7 +37,7 @@
         <th width="2%"></th>
         <th>Name</th>
         <th>Description</th>
-        <th class="text-center">Total Product</th>
+        <th class="text-center">Products</th>
         <th class="text-center">Active</th>
         <th>Added</th>
         <th>Updated</th>
@@ -62,10 +62,10 @@
           <td>{{ catalog.createdAt | date }}</td>
           <td>{{ catalog.updatedAt | date }}</td>
           <td class="text-right">
-            <button class="btn-icon" mat-ripple>
+            <button class="btn btn-sm btn-outline-info me-2">
               <i class="bi bi-pen"></i>
             </button>
-            <button class="btn-icon" mat-ripple>
+            <button class="btn btn-sm btn-outline-danger">
               <i class="bi bi-trash"></i>
             </button>
           </td>

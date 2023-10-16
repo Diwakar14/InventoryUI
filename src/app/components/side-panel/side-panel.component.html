@@ -1,0 +1,21 @@
+<div class="backdrop" *ngIf="isOpened" @fadeInAnimation></div>
+<div class="card border-0 side-panel" [class.side-panel-opened]="isOpened">
+  <h5
+    class="card-title border-bottom d-flex align-items-center justify-content-between"
+  >
+    {{ title }}
+    <div class="control-btn">
+      <button class="btn btn-sm btn-outline-danger" (click)="close()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </h5>
+  <div class="card-body">
+    <ng-template portal></ng-template>
+  </div>
+
+  <div class="card-footer d-flex justify-content-end border-top-0 py-2">
+    <button class="btn btn-secondary me-2" (click)="close()">Cancel</button>
+    <button class="btn btn-primary">Save</button>
+  </div>
+</div>

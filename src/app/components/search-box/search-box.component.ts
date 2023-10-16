@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -66,13 +67,15 @@ export class SearchBoxComponent implements AfterViewInit {
   dropdownList: IDropdownList[] = [];
   searchControl = new FormControl();
 
-  constructor() {}
+  constructor(private changeDet: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     if (this.searchable) {
       this.searchCatalog();
     } else {
       this.dropdownList = this.dropdownItems;
+      console.log(this.dropdownItems);
+      this.changeDet.detectChanges();
     }
   }
 
@@ -86,7 +89,9 @@ export class SearchBoxComponent implements AfterViewInit {
         distinctUntilChanged(),
         debounceTime(300),
         switchMap((input) =>
-          this.service.search(new HttpParams().set(this.searchKey, input))
+          this.searchKey != null
+            ? this.service.search(new HttpParams().set(this.searchKey, input))
+            : null
         )
       )
       .subscribe({

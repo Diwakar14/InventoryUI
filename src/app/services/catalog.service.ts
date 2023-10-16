@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { env } from 'src/env/env';
-import { Catalog } from '../modules/catalog/models/Catalog';
 
 @Injectable({
   providedIn: 'root',

@@ -14,6 +14,8 @@ import { CreateOrderComponent } from './components/create-order/create-order.com
 import { SharedModule } from '../shared.module';
 import { AddCustomerComponent } from './components/add-customer/add-customer.component';
 import { OrderStatusComponent } from './components/order-status/order-status.component';
+import { UpdateStockComponent } from './components/update-stock/update-stock.component';
+import { UpdateInventoryComponent } from './components/update-inventory/update-inventory.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { OrderStatusComponent } from './components/order-status/order-status.com
     CreateOrderComponent,
     AddCustomerComponent,
     OrderStatusComponent,
+    UpdateStockComponent,
+    UpdateInventoryComponent,
   ],
   imports: [
     StockRoutingModule,
